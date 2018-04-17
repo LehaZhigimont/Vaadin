@@ -122,14 +122,18 @@ public class HotelUI extends UI {
 	}
 
 	public void updateList() {
+		String choice = null;
 		List<Hotel> hotelList = hotelService.findAll();
 		if (filterByName.getValue() != "") {
-			hotelList = hotelService.findAll(filterByName.getValue(), "name");
+			choice = "name";
+			hotelList = hotelService.findAll(filterByName.getValue(), choice);
 		} else {
-			hotelList = hotelService.findAll(filterByAddress.getValue(), "address");
+			choice = "address";
+			hotelList = hotelService.findAll(filterByAddress.getValue(), choice);
 		}
 		if (filterByName.getValue() != "" && filterByAddress.getValue() != "") {
-			hotelList = hotelService.findAll(filterByName.getValue(), filterByAddress.getValue(), "addressname");
+			choice = "addressname";
+			hotelList = hotelService.findAll(filterByName.getValue(), filterByAddress.getValue(), choice);
 		}
 		hotelGrid.setItems(hotelList);
 	}

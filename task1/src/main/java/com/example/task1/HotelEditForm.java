@@ -22,7 +22,6 @@ public class HotelEditForm extends FormLayout {
 	private HotelService hotelService = HotelService.getInstance();
 	private Hotel hotel;
 	private HotelUI ui;
-	private Label editFormName = new Label("<em><strong><h1>Add / Edit Form</h1></strong></em>");
 	private TextField name = new TextField("Name");
 	private TextField address = new TextField("Address");
 	private TextField rating = new TextField("Rating");
@@ -33,45 +32,38 @@ public class HotelEditForm extends FormLayout {
 	private Button save = new Button("Save");
 	private Button close = new Button("Close");
 	private Button delete = new Button("Delete");
-
-	public Button getDelete() {
-		return delete;
-	}
-
 	private Binder<Hotel> binder = new Binder<>(Hotel.class);
 
 	public HotelEditForm(HotelUI hotelUI) {
 		this.setVisible(false);
 		this.ui = hotelUI;
+		/*
+		 * Configurations layers
+		 */
 		nameRating.addComponents(name, rating);
 		dateCategory.addComponents(operatesFrom, category);
 		addressLayout.addComponent(address);
 		urlLayout.addComponent(url);
 		descriptionLayout.addComponent(description);
 		buttons.addComponents(save, close, delete);
-		addComponents(nameRating, addressLayout,  dateCategory, urlLayout, descriptionLayout, buttons);
-		//addComponents(nameRating, addressLayout,  dateCategory, url, description, buttons);
-
+		addComponents(nameRating, addressLayout, dateCategory, urlLayout, descriptionLayout, buttons);
 		/*
 		 * Configurations all fields
 		 */
-	
-		
-		//editFormName.setContentMode(com.vaadin.shared.ui.ContentMode.HTML);
-		//editFormName.setHeight(0, Unit.PIXELS);
 		name.setWidth(330, Unit.PIXELS);
 		address.setWidth(450, Unit.PIXELS);
-		operatesFrom.setWidth(200, Unit.PIXELS);
+		operatesFrom.setWidth(300, Unit.PIXELS);
 		category.setWidth(200, Unit.PIXELS);
 		rating.setWidth(108, Unit.PIXELS);
 		url.setWidth(450, Unit.PIXELS);
-
-		
 		description.setWidth(450, Unit.PIXELS);
 
 		binder.bindInstanceFields(this);
 		category.setItems(HotelCategory.values());
-
+		/*
+		 * Configurations Listeners
+		 * 
+		 */
 		save.addClickListener(e -> {
 			save();
 			ui.editHotel.setVisible(true);
@@ -105,7 +97,6 @@ public class HotelEditForm extends FormLayout {
 			ui.updateList();
 			ui.hotelGrid.setHeightByRows(10);
 		});
-
 	}
 
 	private void save() {
@@ -127,4 +118,9 @@ public class HotelEditForm extends FormLayout {
 		binder.setBean(this.hotel);
 		setVisible(true);
 	}
+	
+	public Button getDelete() {
+		return delete;
+	}
+	
 }
